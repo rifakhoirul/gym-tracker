@@ -50,6 +50,11 @@ export default function SettingsScreen() {
           ))}
         </View>
       </View>
+
+      <View style={styles.infoCard}>
+        <Text style={styles.infoTitle}>Local-first storage</Text>
+        <Text style={styles.infoCopy}>Everything stays on this device, so you can train without an account or connection.</Text>
+      </View>
     </View>
   );
 }
@@ -66,4 +71,7 @@ const styles = StyleSheet.create({
   unitSelected: { backgroundColor: colors.lime, borderColor: colors.lime },
   unitText: { color: colors.text, fontSize: 18, fontWeight: '800' },
   unitTextSelected: { color: colors.limeText },
+  infoCard: { marginTop: spacing.lg, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, borderRadius: radius.lg, padding: spacing.lg },
+  infoTitle: { color: colors.text, fontSize: 16, fontWeight: '800' },
+  infoCopy: { color: colors.textMuted, marginTop: spacing.sm, lineHeight: 21 },
 });

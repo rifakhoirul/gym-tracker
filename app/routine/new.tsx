@@ -25,7 +25,10 @@ export default function NewRoutineScreen() {
     })();
   }, [db]);
 
-  const available = useMemo(() => exerciseOptions.filter((exercise) => !selected.includes(exercise.id)), [exerciseOptions, selected]);
+  const available = useMemo(
+    () => exerciseOptions.filter((exercise) => !selected.includes(exercise.id)),
+    [exerciseOptions, selected]
+  );
 
   const toggleExercise = (exerciseId: string) => {
     setSelected((prev) => prev.includes(exerciseId) ? prev.filter((id) => id !== exerciseId) : [...prev, exerciseId]);
@@ -89,7 +92,10 @@ export default function NewRoutineScreen() {
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Selected exercises</Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Selected exercises</Text>
+          <Text style={styles.sectionCount}>{selected.length}</Text>
+        </View>
         {selected.length === 0 ? <Text style={styles.emptyText}>No exercises selected yet.</Text> : null}
         {exerciseOptions.filter((exercise) => selected.includes(exercise.id)).map((exercise) => (
           <Pressable key={exercise.id} onPress={() => toggleExercise(exercise.id)} style={styles.choiceRowSelected}>
@@ -137,7 +143,9 @@ const styles = StyleSheet.create({
   label: { color: colors.textSubtle, fontSize: 11, letterSpacing: 0.8, fontWeight: '800' },
   input: { backgroundColor: colors.surfaceRaised, borderRadius: radius.md, borderWidth: 1, borderColor: colors.border, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, color: colors.text, fontSize: 16 },
   textArea: { minHeight: 90, textAlignVertical: 'top' },
+  sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   sectionTitle: { color: colors.text, fontSize: 18, fontWeight: '800' },
+  sectionCount: { backgroundColor: colors.lime, color: colors.limeText, borderRadius: radius.pill, paddingHorizontal: spacing.sm, paddingVertical: 4, fontWeight: '800' },
   emptyText: { color: colors.textMuted, fontSize: 13 },
   choiceRow: { backgroundColor: colors.surfaceRaised, borderRadius: radius.md, borderWidth: 1, borderColor: colors.border, padding: spacing.md, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   choiceRowSelected: { backgroundColor: '#1B3529', borderRadius: radius.md, borderWidth: 1, borderColor: colors.success, padding: spacing.md, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
