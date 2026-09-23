@@ -332,6 +332,13 @@ export async function updateRoutine(
   return routineId;
 }
 
+export async function deleteRoutine(db: SQLiteDatabase, routineId: string) {
+  await db.withTransactionAsync(async () => {
+    await db.runAsync('DELETE FROM routine_exercises WHERE routine_id = ?', routineId);
+    await db.runAsync('DELETE FROM routines WHERE id = ?', routineId);
+  });
+}
+
 export async function getRoutineSummaries(db: SQLiteDatabase): Promise<RoutineSummary[]> {
   return db.getAllAsync<RoutineSummary>(`
     SELECT r.id, r.name, r.notes, COUNT(re.id) AS exerciseCount,
