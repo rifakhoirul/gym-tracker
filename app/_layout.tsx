@@ -17,6 +17,7 @@ export default function RootLayout() {
         <Stack.Screen name="routine/[id]" />
         <Stack.Screen name="workout/[id]" options={{ gestureEnabled: false }} />
         <Stack.Screen name="history" />
+        <Stack.Screen name="progress" />
         <Stack.Screen name="settings" />
       </Stack>
     </SQLiteProvider>

@@ -62,9 +62,14 @@ export default function HomeScreen() {
         </Pressable>
       </View>
 
-      <Pressable style={styles.historyButton} onPress={() => router.push('/history')}>
-        <Text style={styles.historyButtonText}>View workout history</Text><Text style={styles.chevron}>›</Text>
-      </Pressable>
+      <View style={styles.actionsRow}>
+        <Pressable style={styles.secondaryButton} onPress={() => router.push('/progress')}>
+          <Text style={styles.secondaryButtonText}>Progress</Text>
+        </Pressable>
+        <Pressable style={styles.secondaryButton} onPress={() => router.push('/history')}>
+          <Text style={styles.secondaryButtonText}>History</Text>
+        </Pressable>
+      </View>
     </ScrollView>
   );
 }

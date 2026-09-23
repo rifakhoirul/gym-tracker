@@ -45,6 +45,13 @@ export type HistoryItem = {
   volume: number;
 };
 
+export type ExerciseProgress = {
+  exerciseName: string;
+  bestWeight: number | null;
+  totalSets: number;
+  lastCompletedAt: string | null;
+};
+
 export type ExerciseOption = {
   id: string;
   name: string;
@@ -488,5 +495,20 @@ export async function getHistory(db: SQLiteDatabase): Promise<HistoryItem[]> {
     WHERE w.status = 'completed'
     GROUP BY w.id
     ORDER BY w.completed_at DESC
+  `);
+}
+
+export async function getExerciseProgress(db: SQLiteDatabase): Promise<ExerciseProgress[]> {
+  return db.getAllAsync<ExerciseProgress>(`
+    SELECT
+      we.exercise_name AS exerciseName,
+      MAX(s.weight) AS bestWeight,
+      COUNT(s.id) AS totalSets,
+      MAX(w.completed_at) AS lastCompletedAt
+    FROM workout_exercises we
+    JOIN workouts w ON w.id = we.workout_id AND w.status = 'completed'
+    LEFT JOIN sets s ON s.workout_exercise_id = we.id AND s.completed = 1
+    GROUP BY we.exercise_name
+    ORDER BY bestWeight DESC, exerciseName ASC
   `);
 }
