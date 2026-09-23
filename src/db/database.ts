@@ -269,6 +269,69 @@ export async function createRoutine(
   return routineId;
 }
 
+export async function getRoutineById(db: SQLiteDatabase, routineId: string) {
+  return db.getFirstAsync<{ id: string; name: string; notes: string | null }>(
+    'SELECT id, name, notes FROM routines WHERE id = ?',
+    routineId,
+  );
+}
+
+export async function getRoutineExerciseIds(db: SQLiteDatabase, routineId: string): Promise<string[]> {
+  const rows = await db.getAllAsync<{ exercise_id: string }>(
+    'SELECT exercise_id FROM routine_exercises WHERE routine_id = ? ORDER BY position ASC',
+    routineId,
+  );
+  return rows.map((row) => row.exercise_id);
+}
+
+export async function updateRoutine(
+  db: SQLiteDatabase,
+  routineId: string,
+  name: string,
+  notes: string | null,
+  exerciseIds: string[],
+) {
+  const trimmedName = name.trim();
+  if (!trimmedName) throw new Error('Routine name is required.');
+  if (exerciseIds.length === 0) throw new Error('Add at least one exercise to the routine.');
+
+  const updatedAt = now();
+
+  await db.withTransactionAsync(async () => {
+    await db.runAsync(
+      'UPDATE routines SET name = ?, notes = ?, updated_at = ? WHERE id = ?',
+      trimmedName,
+      notes?.trim() || null,
+      updatedAt,
+      routineId,
+    );
+
+    await db.runAsync('DELETE FROM routine_exercises WHERE routine_id = ?', routineId);
+
+    for (let index = 0; index < exerciseIds.length; index += 1) {
+      const exerciseId = exerciseIds[index];
+      const existing = await db.getFirstAsync<{ id: string }>('SELECT id FROM exercises WHERE id = ?', exerciseId);
+      if (!existing) continue;
+
+      await db.runAsync(
+        `INSERT INTO routine_exercises
+         (id, routine_id, exercise_id, position, target_sets, target_reps, target_weight, rest_seconds)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        id('routine-exercise'),
+        routineId,
+        exerciseId,
+        index + 1,
+        3,
+        null,
+        null,
+        90,
+      );
+    }
+  });
+
+  return routineId;
+}
+
 export async function getRoutineSummaries(db: SQLiteDatabase): Promise<RoutineSummary[]> {
   return db.getAllAsync<RoutineSummary>(`
     SELECT r.id, r.name, r.notes, COUNT(re.id) AS exerciseCount,

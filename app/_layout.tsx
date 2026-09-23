@@ -13,6 +13,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" />
         <Stack.Screen name="onboarding" options={{ presentation: 'modal' }} />
         <Stack.Screen name="routine/new" />
+        <Stack.Screen name="routine/edit/[id]" />
         <Stack.Screen name="routine/[id]" />
         <Stack.Screen name="workout/[id]" options={{ gestureEnabled: false }} />
         <Stack.Screen name="history" />
