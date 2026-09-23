@@ -42,6 +42,17 @@ export default function HomeScreen() {
       <Text style={styles.title}>Train with a clear plan.</Text>
       <Text style={styles.subtitle}>Your workouts stay saved on this device, even when you are offline.</Text>
 
+      <View style={styles.pillRow}>
+        <View style={styles.pillCard}>
+          <Text style={styles.pillLabel}>ROUTINES</Text>
+          <Text style={styles.pillValue}>{routines.length}</Text>
+        </View>
+        <View style={styles.pillCard}>
+          <Text style={styles.pillLabel}>READY</Text>
+          <Text style={styles.pillValue}>{routines.reduce((sum, routine) => sum + routine.exerciseCount, 0)}</Text>
+        </View>
+      </View>
+
       {activeWorkout ? (
         <Pressable style={styles.resumeCard} onPress={() => router.push(`/workout/${activeWorkout.id}`)}>
           <View>
@@ -107,6 +118,10 @@ const styles = StyleSheet.create({
   eyebrow: { color: colors.lime, fontSize: 12, fontWeight: '800', letterSpacing: 1.2 },
   title: { color: colors.text, fontSize: 32, lineHeight: 38, fontWeight: '800', marginTop: 2 },
   subtitle: { color: colors.textMuted, fontSize: 16, lineHeight: 23, marginTop: -6 },
+  pillRow: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.sm },
+  pillCard: { flex: 1, backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: radius.lg, padding: spacing.md },
+  pillLabel: { color: colors.textSubtle, fontSize: 10, letterSpacing: 1, fontWeight: '800' },
+  pillValue: { color: colors.text, fontSize: 24, fontWeight: '800', marginTop: spacing.xs },
   resumeCard: { backgroundColor: colors.lime, borderRadius: radius.lg, padding: spacing.lg, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.sm },
   resumeLabel: { color: colors.limeText, fontSize: 11, fontWeight: '800', letterSpacing: 0.8 },
   resumeTitle: { color: colors.limeText, fontSize: 18, fontWeight: '800', marginTop: 4 },

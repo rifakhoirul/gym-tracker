@@ -41,11 +41,29 @@ export default function ActiveWorkoutScreen() {
   const [workout, setWorkout] = useState<WorkoutDetail | null>(null); const [unit, setUnit] = useState('kg'); const [finishing, setFinishing] = useState(false);
   const load = useCallback(async () => { if (!id) return; const [detail, savedUnit] = await Promise.all([getWorkoutDetail(db, id), getPreference(db, 'unit')]); setWorkout(detail); setUnit(savedUnit ?? 'kg'); }, [db, id]);
   useEffect(() => { void load(); }, [load]);
+
   const finish = async () => { if (!id) return; try { setFinishing(true); await completeWorkout(db, id); router.replace(`/workout/summary?workoutId=${id}`); } catch (error) { Alert.alert('Keep going', error instanceof Error ? error.message : 'Unable to finish this workout.'); } finally { setFinishing(false); } };
+
   if (!workout) return <View style={styles.loading}><Text style={styles.loadingText}>Loading workout…</Text></View>;
+
+  const completedSets = workout.exercises.reduce((total, exercise) => total + exercise.sets.filter((set) => set.completed === 1).length, 0);
+  const totalExercises = workout.exercises.length;
+
   return <View style={styles.screen}><ScrollView contentContainerStyle={styles.content}>
     <View style={styles.topBar}><Pressable onPress={() => router.replace('/')}><Text style={styles.exit}>Exit</Text></Pressable><Text style={styles.inProgress}>IN PROGRESS</Text><Pressable disabled={finishing} onPress={() => void finish()}><Text style={styles.finish}>{finishing ? 'Saving…' : 'Finish'}</Text></Pressable></View>
     <Text style={styles.eyebrow}>ACTIVE WORKOUT</Text><Text style={styles.title}>{workout.name}</Text><Text style={styles.subtitle}>Log each set as you train. Completed sets save automatically.</Text>
+
+    <View style={styles.summaryRow}>
+      <View style={styles.summaryCard}>
+        <Text style={styles.summaryLabel}>SETS</Text>
+        <Text style={styles.summaryValue}>{completedSets}</Text>
+      </View>
+      <View style={styles.summaryCard}>
+        <Text style={styles.summaryLabel}>EXERCISES</Text>
+        <Text style={styles.summaryValue}>{totalExercises}</Text>
+      </View>
+    </View>
+
     {workout.exercises.map((exercise) => <ExerciseCard key={exercise.id} exercise={exercise} unit={unit} onChanged={load} />)}
   </ScrollView></View>;
 }
@@ -53,6 +71,7 @@ export default function ActiveWorkoutScreen() {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.canvas }, content: { padding: spacing.xl, paddingTop: 64, gap: spacing.lg }, loading: { flex: 1, backgroundColor: colors.canvas, alignItems: 'center', justifyContent: 'center' }, loadingText: { color: colors.textMuted },
   topBar: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, exit: { color: colors.textMuted, fontSize: 15, fontWeight: '700' }, inProgress: { color: colors.lime, fontSize: 11, letterSpacing: 1, fontWeight: '800' }, finish: { color: colors.lime, fontSize: 15, fontWeight: '800' }, eyebrow: { color: colors.textSubtle, fontSize: 12, fontWeight: '800', letterSpacing: 1, marginTop: spacing.md }, title: { color: colors.text, fontSize: 28, fontWeight: '800', marginTop: -8 }, subtitle: { color: colors.textMuted, fontSize: 14, lineHeight: 20, marginTop: -7 },
+  summaryRow: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.sm }, summaryCard: { flex: 1, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, borderRadius: radius.lg, padding: spacing.md }, summaryLabel: { color: colors.textSubtle, letterSpacing: 0.8, fontSize: 10, fontWeight: '800' }, summaryValue: { color: colors.text, fontSize: 24, fontWeight: '800', marginTop: spacing.xs },
   exerciseCard: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: spacing.lg, gap: spacing.sm, marginTop: spacing.sm }, exerciseHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: spacing.sm }, exerciseName: { color: colors.text, fontSize: 18, fontWeight: '800' }, exerciseHint: { color: colors.textMuted, fontSize: 13, marginTop: 4 }, workingBadge: { color: colors.lime, fontSize: 10, letterSpacing: 0.8, fontWeight: '800', paddingTop: 3 },
   tableHead: { flexDirection: 'row', paddingHorizontal: spacing.sm, marginTop: spacing.sm }, tableSet: { width: 34, color: colors.textSubtle, fontSize: 10, letterSpacing: 0.7, fontWeight: '800' }, tableWeight: { flex: 1, color: colors.textSubtle, fontSize: 10, letterSpacing: 0.7, fontWeight: '800' }, tableReps: { flex: 1, color: colors.textSubtle, fontSize: 10, letterSpacing: 0.7, fontWeight: '800' },
   setRow: { minHeight: 60, borderRadius: radius.md, backgroundColor: colors.surfaceRaised, flexDirection: 'row', alignItems: 'center', paddingHorizontal: spacing.sm, gap: spacing.sm }, setRowComplete: { backgroundColor: '#25402E' }, setNumber: { width: 26, color: colors.text, fontSize: 16, fontWeight: '800', textAlign: 'center' }, inputGroup: { flex: 1, flexDirection: 'row', alignItems: 'baseline', borderBottomColor: colors.border, borderBottomWidth: 1 }, numericInput: { flex: 1, color: colors.text, fontSize: 18, fontWeight: '800', paddingVertical: 8, minWidth: 0 }, inputLabel: { color: colors.textSubtle, fontSize: 11, marginLeft: 2 }, completeButton: { minWidth: 52, height: 40, borderRadius: radius.sm, backgroundColor: colors.lime, alignItems: 'center', justifyContent: 'center' }, completeButtonText: { color: colors.limeText, fontSize: 12, fontWeight: '800' }, completedButton: { backgroundColor: colors.success }, completedButtonText: { color: '#102716', fontSize: 18 }, addSet: { minHeight: 44, alignItems: 'center', justifyContent: 'center', marginTop: spacing.xs }, addSetText: { color: colors.lime, fontSize: 14, fontWeight: '800' },

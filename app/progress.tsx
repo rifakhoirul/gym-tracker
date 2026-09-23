@@ -6,6 +6,36 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { getExerciseProgress, getHistory, type ExerciseProgress } from '../src/db/database';
 import { colors, radius, spacing } from '../src/theme';
 
+function TrendChart({ items }: { items: ExerciseProgress[] }) {
+  const chartData = items.slice(0, 5).map((item) => ({
+    label: item.exerciseName.split(' ').slice(0, 2).join(' '),
+    value: item.bestWeight ?? 0,
+  }));
+
+  const maxValue = Math.max(...chartData.map((item) => item.value), 1);
+
+  return (
+    <View style={styles.chartCard}>
+      <Text style={styles.summaryLabel}>Lift trend</Text>
+      <View style={styles.chartWrap}>
+        {chartData.map((item) => (
+          <View key={item.label} style={styles.barGroup}>
+            <View style={styles.barTrack}>
+              <View
+                style={[
+                  styles.barFill,
+                  { height: `${Math.max((item.value / maxValue) * 100, 12)}%` },
+                ]}
+              />
+            </View>
+            <Text style={styles.barLabel}>{item.label}</Text>
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+}
+
 export default function ProgressScreen() {
   const db = useSQLiteContext();
   const router = useRouter();
@@ -60,6 +90,8 @@ export default function ProgressScreen() {
             <Text style={styles.summaryMeta}>Across all finished workouts</Text>
           </View>
 
+          <TrendChart items={items} />
+
           {items.map((item) => (
             <View key={item.exerciseName} style={styles.card}>
               <Text style={styles.exerciseName}>{item.exerciseName}</Text>
@@ -92,6 +124,12 @@ const styles = StyleSheet.create({
   summaryMeta: { color: colors.textMuted, fontSize: 12, marginTop: 4 },
   volumeCard: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: spacing.lg },
   volumeValue: { color: colors.text, fontSize: 28, fontWeight: '800', marginTop: spacing.sm },
+  chartCard: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: spacing.lg },
+  chartWrap: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', height: 120, marginTop: spacing.md, gap: spacing.sm },
+  barGroup: { flex: 1, height: '100%', justifyContent: 'flex-end', alignItems: 'center', gap: spacing.xs },
+  barTrack: { width: '100%', height: 90, justifyContent: 'flex-end', backgroundColor: colors.surfaceRaised, borderRadius: radius.sm, overflow: 'hidden' },
+  barFill: { width: '100%', backgroundColor: colors.lime, borderRadius: radius.sm },
+  barLabel: { color: colors.textMuted, fontSize: 10, fontWeight: '700', marginTop: spacing.xs },
   card: { backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: spacing.lg },
   exerciseName: { color: colors.text, fontSize: 18, fontWeight: '800' },
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginTop: spacing.sm },
