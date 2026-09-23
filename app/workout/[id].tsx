@@ -41,7 +41,7 @@ export default function ActiveWorkoutScreen() {
   const [workout, setWorkout] = useState<WorkoutDetail | null>(null); const [unit, setUnit] = useState('kg'); const [finishing, setFinishing] = useState(false);
   const load = useCallback(async () => { if (!id) return; const [detail, savedUnit] = await Promise.all([getWorkoutDetail(db, id), getPreference(db, 'unit')]); setWorkout(detail); setUnit(savedUnit ?? 'kg'); }, [db, id]);
   useEffect(() => { void load(); }, [load]);
-  const finish = async () => { if (!id) return; try { setFinishing(true); await completeWorkout(db, id); router.replace('/history'); } catch (error) { Alert.alert('Keep going', error instanceof Error ? error.message : 'Unable to finish this workout.'); } finally { setFinishing(false); } };
+  const finish = async () => { if (!id) return; try { setFinishing(true); await completeWorkout(db, id); router.replace(`/workout/summary?workoutId=${id}`); } catch (error) { Alert.alert('Keep going', error instanceof Error ? error.message : 'Unable to finish this workout.'); } finally { setFinishing(false); } };
   if (!workout) return <View style={styles.loading}><Text style={styles.loadingText}>Loading workout…</Text></View>;
   return <View style={styles.screen}><ScrollView contentContainerStyle={styles.content}>
     <View style={styles.topBar}><Pressable onPress={() => router.replace('/')}><Text style={styles.exit}>Exit</Text></Pressable><Text style={styles.inProgress}>IN PROGRESS</Text><Pressable disabled={finishing} onPress={() => void finish()}><Text style={styles.finish}>{finishing ? 'Saving…' : 'Finish'}</Text></Pressable></View>

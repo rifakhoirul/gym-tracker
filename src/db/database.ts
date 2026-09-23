@@ -52,6 +52,16 @@ export type ExerciseProgress = {
   lastCompletedAt: string | null;
 };
 
+export type WorkoutSessionSummary = {
+  id: string;
+  name: string;
+  startedAt: string;
+  completedAt: string | null;
+  totalSets: number;
+  completedExercises: number;
+  volume: number;
+};
+
 export type ExerciseOption = {
   id: string;
   name: string;
@@ -496,6 +506,45 @@ export async function getHistory(db: SQLiteDatabase): Promise<HistoryItem[]> {
     GROUP BY w.id
     ORDER BY w.completed_at DESC
   `);
+}
+
+export async function getWorkoutSessionSummary(db: SQLiteDatabase, workoutId: string): Promise<WorkoutSessionSummary | null> {
+  const workout = await db.getFirstAsync<{
+    id: string;
+    name: string;
+    started_at: string;
+    completed_at: string | null;
+  }>(`
+    SELECT id, name, started_at, completed_at
+    FROM workouts
+    WHERE id = ?
+  `, workoutId);
+
+  if (!workout) return null;
+
+  const details = await db.getFirstAsync<{
+    totalSets: number;
+    completedExercises: number;
+    volume: number;
+  }>(`
+    SELECT
+      COUNT(DISTINCT s.id) AS totalSets,
+      COUNT(DISTINCT we.id) AS completedExercises,
+      COALESCE(SUM(CASE WHEN s.completed = 1 AND s.set_type = 'working' THEN s.weight * s.reps ELSE 0 END), 0) AS volume
+    FROM workout_exercises we
+    LEFT JOIN sets s ON s.workout_exercise_id = we.id AND s.completed = 1
+    WHERE we.workout_id = ?
+  `, workoutId);
+
+  return {
+    id: workout.id,
+    name: workout.name,
+    startedAt: workout.started_at,
+    completedAt: workout.completed_at,
+    totalSets: details?.totalSets ?? 0,
+    completedExercises: details?.completedExercises ?? 0,
+    volume: details?.volume ?? 0,
+  };
 }
 
 export async function getExerciseProgress(db: SQLiteDatabase): Promise<ExerciseProgress[]> {
