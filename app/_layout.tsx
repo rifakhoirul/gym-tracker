@@ -12,9 +12,11 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.canvas } }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="onboarding" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="routine/new" />
         <Stack.Screen name="routine/[id]" />
         <Stack.Screen name="workout/[id]" options={{ gestureEnabled: false }} />
         <Stack.Screen name="history" />
+        <Stack.Screen name="settings" />
       </Stack>
     </SQLiteProvider>
   );

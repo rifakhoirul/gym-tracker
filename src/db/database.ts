@@ -45,6 +45,13 @@ export type HistoryItem = {
   volume: number;
 };
 
+export type ExerciseOption = {
+  id: string;
+  name: string;
+  muscleGroup: string | null;
+  equipment: string | null;
+};
+
 const id = (prefix: string) => `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 const now = () => new Date().toISOString();
 
@@ -183,6 +190,83 @@ export async function setPreference(db: SQLiteDatabase, key: string, value: stri
     key,
     value,
   );
+}
+
+export async function getExercises(db: SQLiteDatabase): Promise<ExerciseOption[]> {
+  return db.getAllAsync<ExerciseOption>(`
+    SELECT id, name, muscle_group AS muscleGroup, equipment
+    FROM exercises
+    WHERE archived = 0
+    ORDER BY name ASC
+  `);
+}
+
+export async function createExercise(
+  db: SQLiteDatabase,
+  input: { name: string; muscleGroup?: string | null; equipment?: string | null },
+) {
+  const trimmedName = input.name.trim();
+  if (!trimmedName) throw new Error('Exercise name is required.');
+
+  const exerciseId = id('exercise');
+  await db.runAsync(
+    `INSERT INTO exercises (id, name, muscle_group, equipment, is_custom, archived, created_at)
+     VALUES (?, ?, ?, ?, 1, 0, ?)`,
+    exerciseId,
+    trimmedName,
+    input.muscleGroup?.trim() || null,
+    input.equipment?.trim() || null,
+    now(),
+  );
+
+  return exerciseId;
+}
+
+export async function createRoutine(
+  db: SQLiteDatabase,
+  name: string,
+  notes: string | null,
+  exerciseIds: string[],
+) {
+  const trimmedName = name.trim();
+  if (!trimmedName) throw new Error('Routine name is required.');
+  if (exerciseIds.length === 0) throw new Error('Add at least one exercise to the routine.');
+
+  const routineId = id('routine');
+  const createdAt = now();
+
+  await db.withTransactionAsync(async () => {
+    await db.runAsync(
+      'INSERT INTO routines (id, name, notes, created_at, updated_at) VALUES (?, ?, ?, ?, ?)',
+      routineId,
+      trimmedName,
+      notes?.trim() || null,
+      createdAt,
+      createdAt,
+    );
+
+    for (let index = 0; index < exerciseIds.length; index += 1) {
+      const exerciseId = exerciseIds[index];
+      const existing = await db.getFirstAsync<{ id: string }>('SELECT id FROM exercises WHERE id = ?', exerciseId);
+      if (!existing) continue;
+
+      await db.runAsync(
+        `INSERT INTO routine_exercises
+         (id, routine_id, exercise_id, position, target_sets, target_reps, target_weight, rest_seconds)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        id('routine-exercise'),
+        routineId,
+        exerciseId,
+        index + 1,
+        3,
+        null,
+        null,
+        90,
+      );
+    }
+  });
+
+  return routineId;
 }
 
 export async function getRoutineSummaries(db: SQLiteDatabase): Promise<RoutineSummary[]> {

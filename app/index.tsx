@@ -53,6 +53,15 @@ export default function HomeScreen() {
         </Pressable>
       ))}
 
+      <View style={styles.actionsRow}>
+        <Pressable style={styles.primaryButton} onPress={() => router.push('/routine/new')}>
+          <Text style={styles.primaryButtonText}>Create routine</Text>
+        </Pressable>
+        <Pressable style={styles.secondaryButton} onPress={() => router.push('/settings')}>
+          <Text style={styles.secondaryButtonText}>Settings</Text>
+        </Pressable>
+      </View>
+
       <Pressable style={styles.historyButton} onPress={() => router.push('/history')}>
         <Text style={styles.historyButtonText}>View workout history</Text><Text style={styles.chevron}>›</Text>
       </Pressable>
@@ -72,5 +81,8 @@ const styles = StyleSheet.create({
   routineCard: { minHeight: 80, backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: radius.lg, padding: spacing.lg, flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   routineIcon: { width: 42, height: 42, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md, backgroundColor: colors.surfaceRaised }, routineIconText: { color: colors.lime, fontSize: 22, fontWeight: '700' },
   routineText: { flex: 1 }, routineTitle: { color: colors.text, fontSize: 17, fontWeight: '700' }, routineMeta: { color: colors.textMuted, fontSize: 13, marginTop: 4 }, chevron: { color: colors.textMuted, fontSize: 28, fontWeight: '300' },
+  actionsRow: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.sm },
+  primaryButton: { flex: 1, minHeight: 52, borderRadius: radius.md, backgroundColor: colors.lime, justifyContent: 'center', alignItems: 'center' }, primaryButtonText: { color: colors.limeText, fontWeight: '800', fontSize: 15 },
+  secondaryButton: { flex: 1, minHeight: 52, borderRadius: radius.md, borderWidth: 1, borderColor: colors.border, justifyContent: 'center', alignItems: 'center' }, secondaryButtonText: { color: colors.text, fontWeight: '700', fontSize: 15 },
   historyButton: { minHeight: 52, borderRadius: radius.md, borderColor: colors.border, borderWidth: 1, paddingHorizontal: spacing.lg, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.sm }, historyButtonText: { color: colors.lime, fontWeight: '700', fontSize: 15 },
 });
