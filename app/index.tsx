@@ -1,0 +1,76 @@
+import { useCallback, useState } from 'react';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { useSQLiteContext } from 'expo-sqlite';
+
+import { getActiveWorkout, getPreference, getRoutineSummaries, type RoutineSummary } from '../src/db/database';
+import { colors, radius, spacing } from '../src/theme';
+
+export default function HomeScreen() {
+  const db = useSQLiteContext();
+  const router = useRouter();
+  const [routines, setRoutines] = useState<RoutineSummary[]>([]);
+  const [activeWorkout, setActiveWorkout] = useState<{ id: string; name: string } | null>(null);
+  const [ready, setReady] = useState(false);
+
+  const load = useCallback(async () => {
+    const onboardingComplete = await getPreference(db, 'onboarding_complete');
+    if (onboardingComplete !== 'true') {
+      router.replace('/onboarding');
+      return;
+    }
+    const [nextRoutines, nextActiveWorkout] = await Promise.all([getRoutineSummaries(db), getActiveWorkout(db)]);
+    setRoutines(nextRoutines);
+    setActiveWorkout(nextActiveWorkout);
+    setReady(true);
+  }, [db, router]);
+
+  useFocusEffect(useCallback(() => { void load(); }, [load]));
+
+  if (!ready) {
+    return <View style={styles.loading}><ActivityIndicator color={colors.lime} /></View>;
+  }
+
+  return (
+    <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <Text style={styles.eyebrow}>GYM TRACKER</Text>
+      <Text style={styles.title}>Train with a clear plan.</Text>
+      <Text style={styles.subtitle}>Your workouts stay saved on this device, even when you are offline.</Text>
+
+      {activeWorkout ? (
+        <Pressable style={styles.resumeCard} onPress={() => router.push(`/workout/${activeWorkout.id}`)}>
+          <View><Text style={styles.resumeLabel}>WORKOUT IN PROGRESS</Text><Text style={styles.resumeTitle}>{activeWorkout.name}</Text></View>
+          <Text style={styles.resumeAction}>Resume →</Text>
+        </Pressable>
+      ) : null}
+
+      <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>Your routines</Text><Text style={styles.sectionHint}>{routines.length} saved</Text></View>
+      {routines.map((routine) => (
+        <Pressable key={routine.id} style={styles.routineCard} onPress={() => router.push(`/routine/${routine.id}`)}>
+          <View style={styles.routineIcon}><Text style={styles.routineIconText}>↗</Text></View>
+          <View style={styles.routineText}><Text style={styles.routineTitle}>{routine.name}</Text><Text style={styles.routineMeta}>{routine.exerciseCount} exercises · Ready when you are</Text></View>
+          <Text style={styles.chevron}>›</Text>
+        </Pressable>
+      ))}
+
+      <Pressable style={styles.historyButton} onPress={() => router.push('/history')}>
+        <Text style={styles.historyButtonText}>View workout history</Text><Text style={styles.chevron}>›</Text>
+      </Pressable>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: colors.canvas }, content: { padding: spacing.xl, paddingTop: 72, gap: spacing.lg },
+  loading: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.canvas },
+  eyebrow: { color: colors.lime, fontSize: 12, fontWeight: '800', letterSpacing: 1.2 },
+  title: { color: colors.text, fontSize: 32, lineHeight: 38, fontWeight: '800', marginTop: 2 },
+  subtitle: { color: colors.textMuted, fontSize: 16, lineHeight: 23, marginTop: -6 },
+  resumeCard: { backgroundColor: colors.lime, borderRadius: radius.lg, padding: spacing.lg, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.sm },
+  resumeLabel: { color: colors.limeText, fontSize: 11, fontWeight: '800', letterSpacing: 0.8 }, resumeTitle: { color: colors.limeText, fontSize: 18, fontWeight: '800', marginTop: 4 }, resumeAction: { color: colors.limeText, fontSize: 15, fontWeight: '800' },
+  sectionHeader: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginTop: spacing.md }, sectionTitle: { color: colors.text, fontSize: 20, fontWeight: '800' }, sectionHint: { color: colors.textSubtle, fontSize: 13 },
+  routineCard: { minHeight: 80, backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: radius.lg, padding: spacing.lg, flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  routineIcon: { width: 42, height: 42, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md, backgroundColor: colors.surfaceRaised }, routineIconText: { color: colors.lime, fontSize: 22, fontWeight: '700' },
+  routineText: { flex: 1 }, routineTitle: { color: colors.text, fontSize: 17, fontWeight: '700' }, routineMeta: { color: colors.textMuted, fontSize: 13, marginTop: 4 }, chevron: { color: colors.textMuted, fontSize: 28, fontWeight: '300' },
+  historyButton: { minHeight: 52, borderRadius: radius.md, borderColor: colors.border, borderWidth: 1, paddingHorizontal: spacing.lg, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.sm }, historyButtonText: { color: colors.lime, fontWeight: '700', fontSize: 15 },
+});
