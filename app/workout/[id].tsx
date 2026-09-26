@@ -37,12 +37,42 @@ function ExerciseCard({ exercise, unit, onChanged }: { exercise: WorkoutExercise
 }
 
 export default function ActiveWorkoutScreen() {
-  const db = useSQLiteContext(); const router = useRouter(); const { id } = useLocalSearchParams<{ id: string }>();
-  const [workout, setWorkout] = useState<WorkoutDetail | null>(null); const [unit, setUnit] = useState('kg'); const [finishing, setFinishing] = useState(false);
-  const load = useCallback(async () => { if (!id) return; const [detail, savedUnit] = await Promise.all([getWorkoutDetail(db, id), getPreference(db, 'unit')]); setWorkout(detail); setUnit(savedUnit ?? 'kg'); }, [db, id]);
-  useEffect(() => { void load(); }, [load]);
+  const db = useSQLiteContext();
+  const router = useRouter();
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const [workout, setWorkout] = useState<WorkoutDetail | null>(null);
+  const [unit, setUnit] = useState('kg');
+  const [finishing, setFinishing] = useState(false);
 
-  const finish = async () => { if (!id) return; try { setFinishing(true); await completeWorkout(db, id); router.replace(`/workout/summary?workoutId=${id}`); } catch (error) { Alert.alert('Keep going', error instanceof Error ? error.message : 'Unable to finish this workout.'); } finally { setFinishing(false); } };
+  const load = useCallback(async () => {
+    if (!id) return;
+    const [detail, savedUnit] = await Promise.all([
+      getWorkoutDetail(db, id),
+      getPreference(db, 'unit')
+    ]);
+    setWorkout(detail);
+    setUnit(savedUnit ?? 'kg');
+  }, [db, id]);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const finish = async () => {
+    if (!id) return;
+    try {
+      setFinishing(true);
+      await completeWorkout(db, id);
+      router.replace(`/workout/summary?workoutId=${id}`);
+    } catch (error) {
+      Alert.alert(
+        'Keep going',
+        error instanceof Error ? error.message : 'Unable to finish this workout.'
+      );
+    } finally {
+      setFinishing(false);
+    }
+  };
 
   if (!workout) return <View style={styles.loading}><Text style={styles.loadingText}>Loading workout…</Text></View>;
 
