@@ -18,9 +18,9 @@ function SetRow({ set, unit, onSave }: { set: WorkoutSet; unit: string; onSave: 
   };
   return <View style={[styles.setRow, set.completed === 1 && styles.setRowComplete]}>
     <Text style={styles.setNumber}>{set.setNumber}</Text>
-    <View style={styles.inputGroup}><TextInput value={weight} onChangeText={setWeight} onBlur={() => void persist(false)} keyboardType="decimal-pad" editable={!saving && set.completed !== 1} placeholder="0" placeholderTextColor={colors.textSubtle} style={styles.numericInput} /><Text style={styles.inputLabel}>{unit}</Text></View>
-    <View style={styles.inputGroup}><TextInput value={reps} onChangeText={setReps} onBlur={() => void persist(false)} keyboardType="number-pad" editable={!saving && set.completed !== 1} placeholder="0" placeholderTextColor={colors.textSubtle} style={styles.numericInput} /><Text style={styles.inputLabel}>reps</Text></View>
-    <Pressable disabled={saving || set.completed === 1} onPress={() => void persist(true)} style={[styles.completeButton, set.completed === 1 && styles.completedButton]}><Text style={[styles.completeButtonText, set.completed === 1 && styles.completedButtonText]}>{set.completed === 1 ? '✓' : 'Done'}</Text></Pressable>
+    <View style={styles.inputGroup}><TextInput aria-label={`Set ${set.setNumber} weight in ${unit}`} value={weight} onChangeText={setWeight} onBlur={() => void persist(false)} keyboardType="decimal-pad" editable={!saving && set.completed !== 1} placeholder="0" placeholderTextColor={colors.textSubtle} style={styles.numericInput} /><Text aria-hidden={true} style={styles.inputLabel}>{unit}</Text></View>
+    <View style={styles.inputGroup}><TextInput aria-label={`Set ${set.setNumber} reps`} value={reps} onChangeText={setReps} onBlur={() => void persist(false)} keyboardType="number-pad" editable={!saving && set.completed !== 1} placeholder="0" placeholderTextColor={colors.textSubtle} style={styles.numericInput} /><Text aria-hidden={true} style={styles.inputLabel}>reps</Text></View>
+    <Pressable aria-label={set.completed === 1 ? 'Completed' : 'Complete set'} disabled={saving || set.completed === 1} onPress={() => void persist(true)} style={[styles.completeButton, set.completed === 1 && styles.completedButton]}><Text style={[styles.completeButtonText, set.completed === 1 && styles.completedButtonText]}>{set.completed === 1 ? '✓' : 'Done'}</Text></Pressable>
   </View>;
 }
 
@@ -50,7 +50,7 @@ export default function ActiveWorkoutScreen() {
   const totalExercises = workout.exercises.length;
 
   return <View style={styles.screen}><ScrollView contentContainerStyle={styles.content}>
-    <View style={styles.topBar}><Pressable onPress={() => router.replace('/')}><Text style={styles.exit}>Exit</Text></Pressable><Text style={styles.inProgress}>IN PROGRESS</Text><Pressable disabled={finishing} onPress={() => void finish()}><Text style={styles.finish}>{finishing ? 'Saving…' : 'Finish'}</Text></Pressable></View>
+    <View style={styles.topBar}><Pressable hitSlop={16} onPress={() => router.replace('/')}><Text style={styles.exit}>Exit</Text></Pressable><Text style={styles.inProgress}>IN PROGRESS</Text><Pressable hitSlop={16} disabled={finishing} onPress={() => void finish()}><Text style={styles.finish}>{finishing ? 'Saving…' : 'Finish'}</Text></Pressable></View>
     <Text style={styles.eyebrow}>ACTIVE WORKOUT</Text><Text style={styles.title}>{workout.name}</Text><Text style={styles.subtitle}>Log each set as you train. Completed sets save automatically.</Text>
 
     <View style={styles.summaryRow}>

@@ -1,0 +1,3 @@
+## 2026-09-26 - [Active Workout View UX/a11y Enhancements]
+**Learning:** Adding semantic context via aria-labels and hitSlop for easier interaction drastically improved accessibility and mobile usability in the active workout view, solving pain points where visual labels were redundant to screen readers and small actions were difficult to press mid-workout.
+**Action:** Always include context-aware aria-labels for inline form fields, hide redundant visual labels, and apply hitSlop to icon or small text buttons on mobile interfaces.
