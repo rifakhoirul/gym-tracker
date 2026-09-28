@@ -1,0 +1,113 @@
+Starting project at /app
+Starting Metro Bundler
+
+Waiting on http://localhost:8081
+
+An update for expo is available: 57.0.24 → ~57.0.25
+2 other packages may need updating. Run npx expo install --check for details.
+Logs for your project will appear below.
+Web Bundled 10863ms node_modules/expo-router/entry.js (918 modules)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 1206ms node_modules/expo-sqlite/web/worker.ts (16 modules)
+Web Bundled 39ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 37ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 5ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 66ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 5ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 48ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 75ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 46ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 45ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 40ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 46ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 4ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 44ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 2ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 45ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 45ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 39ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 43ms node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 5ms node_modules/expo-sqlite/web/worker.ts (1 module)
