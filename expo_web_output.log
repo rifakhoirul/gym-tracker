@@ -1,0 +1,76 @@
+Starting project at /app
+Starting Metro Bundler
+
+Waiting on http://localhost:8081
+
+Logs for your project will appear below.
+Web Bundled 9403ms node_modules/.pnpm/expo-router@57.0.25_e1c2b5cf56bec8fa48e959927fb98e44/node_modules/expo-router/entry.js (919 modules)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 1245ms node_modules/.pnpm/expo-sqlite@57.0.4_expo@57.0.27_react-native@0.86.3_@babel+core@7.29.7_@react-native+me_63de6779cef3c612ca6e941c41118a95/node_modules/expo-sqlite/web/worker.ts (16 modules)
+Web Bundled 46ms node_modules/.pnpm/expo-router@57.0.25_e1c2b5cf56bec8fa48e959927fb98e44/node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/.pnpm/expo-sqlite@57.0.4_expo@57.0.27_react-native@0.86.3_@babel+core@7.29.7_@react-native+me_63de6779cef3c612ca6e941c41118a95/node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 43ms node_modules/.pnpm/expo-router@57.0.25_e1c2b5cf56bec8fa48e959927fb98e44/node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 5ms node_modules/.pnpm/expo-sqlite@57.0.4_expo@57.0.27_react-native@0.86.3_@babel+core@7.29.7_@react-native+me_63de6779cef3c612ca6e941c41118a95/node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 55ms node_modules/.pnpm/expo-router@57.0.25_e1c2b5cf56bec8fa48e959927fb98e44/node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/.pnpm/expo-sqlite@57.0.4_expo@57.0.27_react-native@0.86.3_@babel+core@7.29.7_@react-native+me_63de6779cef3c612ca6e941c41118a95/node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 51ms node_modules/.pnpm/expo-router@57.0.25_e1c2b5cf56bec8fa48e959927fb98e44/node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 6ms node_modules/.pnpm/expo-sqlite@57.0.4_expo@57.0.27_react-native@0.86.3_@babel+core@7.29.7_@react-native+me_63de6779cef3c612ca6e941c41118a95/node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 44ms node_modules/.pnpm/expo-router@57.0.25_e1c2b5cf56bec8fa48e959927fb98e44/node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/.pnpm/expo-sqlite@57.0.4_expo@57.0.27_react-native@0.86.3_@babel+core@7.29.7_@react-native+me_63de6779cef3c612ca6e941c41118a95/node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 52ms node_modules/.pnpm/expo-router@57.0.25_e1c2b5cf56bec8fa48e959927fb98e44/node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 7ms node_modules/.pnpm/expo-sqlite@57.0.4_expo@57.0.27_react-native@0.86.3_@babel+core@7.29.7_@react-native+me_63de6779cef3c612ca6e941c41118a95/node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 44ms node_modules/.pnpm/expo-router@57.0.25_e1c2b5cf56bec8fa48e959927fb98e44/node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 3ms node_modules/.pnpm/expo-sqlite@57.0.4_expo@57.0.27_react-native@0.86.3_@babel+core@7.29.7_@react-native+me_63de6779cef3c612ca6e941c41118a95/node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 45ms node_modules/.pnpm/expo-router@57.0.25_e1c2b5cf56bec8fa48e959927fb98e44/node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 12ms node_modules/.pnpm/expo-sqlite@57.0.4_expo@57.0.27_react-native@0.86.3_@babel+core@7.29.7_@react-native+me_63de6779cef3c612ca6e941c41118a95/node_modules/expo-sqlite/web/worker.ts (1 module)
+Web Bundled 41ms node_modules/.pnpm/expo-router@57.0.25_e1c2b5cf56bec8fa48e959927fb98e44/node_modules/expo-router/entry.js (1 module)
+Web  INFO  %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Web  LOG  Running application "main" with appParams:
+ {"hydrate": undefined, "rootTag": "#root"}
+Development-level warnings: ON.
+Performance optimizations: OFF.
+Web Bundled 5ms node_modules/.pnpm/expo-sqlite@57.0.4_expo@57.0.27_react-native@0.86.3_@babel+core@7.29.7_@react-native+me_63de6779cef3c612ca6e941c41118a95/node_modules/expo-sqlite/web/worker.ts (1 module)
