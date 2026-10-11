@@ -1,0 +1,3 @@
+## 2024-03-22 - Prevent Data Lock-in During Active Sessions
+**Learning:** During active tasks like logging a workout, users frequently make typo mistakes that they want to correct. Permanently locking a row upon completion causes frustration, as users cannot undo the action or fix the typo without deleting and re-adding the entire data entry. Icon-only buttons for these actions also pose an accessibility issue for screen readers.
+**Action:** Always provide an 'undo' or edit toggle for submitted data states within an active session (e.g., workout sets) rather than permanently locking the row, to prevent frustrating typo lock-ins. Ensure icon-only completion/undo buttons include a dynamic `accessibilityLabel` providing clear context to screen readers.
