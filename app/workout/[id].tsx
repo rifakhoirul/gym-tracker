@@ -20,7 +20,7 @@ function SetRow({ set, unit, onSave }: { set: WorkoutSet; unit: string; onSave: 
     <Text style={styles.setNumber}>{set.setNumber}</Text>
     <View style={styles.inputGroup}><TextInput value={weight} onChangeText={setWeight} onBlur={() => void persist(false)} keyboardType="decimal-pad" editable={!saving && set.completed !== 1} placeholder="0" placeholderTextColor={colors.textSubtle} style={styles.numericInput} /><Text style={styles.inputLabel}>{unit}</Text></View>
     <View style={styles.inputGroup}><TextInput value={reps} onChangeText={setReps} onBlur={() => void persist(false)} keyboardType="number-pad" editable={!saving && set.completed !== 1} placeholder="0" placeholderTextColor={colors.textSubtle} style={styles.numericInput} /><Text style={styles.inputLabel}>reps</Text></View>
-    <Pressable disabled={saving || set.completed === 1} onPress={() => void persist(true)} style={[styles.completeButton, set.completed === 1 && styles.completedButton]}><Text style={[styles.completeButtonText, set.completed === 1 && styles.completedButtonText]}>{set.completed === 1 ? '✓' : 'Done'}</Text></Pressable>
+    <Pressable accessible={true} accessibilityRole="button" accessibilityLabel={set.completed === 1 ? 'Mark set as incomplete' : 'Mark set as complete'} disabled={saving} onPress={() => void persist(set.completed !== 1)} style={[styles.completeButton, set.completed === 1 && styles.completedButton]}><Text style={[styles.completeButtonText, set.completed === 1 && styles.completedButtonText]}>{set.completed === 1 ? '✓' : 'Done'}</Text></Pressable>
   </View>;
 }
 
