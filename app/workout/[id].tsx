@@ -11,16 +11,18 @@ function SetRow({ set, unit, onSave }: { set: WorkoutSet; unit: string; onSave: 
   const [reps, setReps] = useState(set.reps?.toString() ?? '');
   const [saving, setSaving] = useState(false);
   const parse = (value: string) => value.trim() === '' ? null : Number(value);
-  const persist = async (complete: boolean) => {
+  const persist = async (toggleComplete: boolean) => {
     const nextWeight = parse(weight); const nextReps = parse(reps);
-    if (complete && (!nextWeight || !nextReps || nextWeight <= 0 || nextReps <= 0)) { Alert.alert('Add weight and reps', 'Enter values greater than zero before completing this set.'); return; }
-    setSaving(true); await onSave(nextWeight, nextReps, complete); setSaving(false);
+    const isCurrentlyComplete = set.completed === 1;
+    const willBeComplete = toggleComplete ? !isCurrentlyComplete : isCurrentlyComplete;
+    if (willBeComplete && (!nextWeight || !nextReps || nextWeight <= 0 || nextReps <= 0)) { Alert.alert('Add weight and reps', 'Enter values greater than zero before completing this set.'); return; }
+    setSaving(true); await onSave(nextWeight, nextReps, willBeComplete); setSaving(false);
   };
   return <View style={[styles.setRow, set.completed === 1 && styles.setRowComplete]}>
     <Text style={styles.setNumber}>{set.setNumber}</Text>
     <View style={styles.inputGroup}><TextInput value={weight} onChangeText={setWeight} onBlur={() => void persist(false)} keyboardType="decimal-pad" editable={!saving && set.completed !== 1} placeholder="0" placeholderTextColor={colors.textSubtle} style={styles.numericInput} /><Text style={styles.inputLabel}>{unit}</Text></View>
     <View style={styles.inputGroup}><TextInput value={reps} onChangeText={setReps} onBlur={() => void persist(false)} keyboardType="number-pad" editable={!saving && set.completed !== 1} placeholder="0" placeholderTextColor={colors.textSubtle} style={styles.numericInput} /><Text style={styles.inputLabel}>reps</Text></View>
-    <Pressable disabled={saving || set.completed === 1} onPress={() => void persist(true)} style={[styles.completeButton, set.completed === 1 && styles.completedButton]}><Text style={[styles.completeButtonText, set.completed === 1 && styles.completedButtonText]}>{set.completed === 1 ? '✓' : 'Done'}</Text></Pressable>
+    <Pressable disabled={saving} onPress={() => void persist(true)} accessible={true} accessibilityRole="button" accessibilityLabel={set.completed === 1 ? 'Undo set completion' : 'Complete set'} style={[styles.completeButton, set.completed === 1 && styles.completedButton]}><Text style={[styles.completeButtonText, set.completed === 1 && styles.completedButtonText]}>{set.completed === 1 ? '✓' : 'Done'}</Text></Pressable>
   </View>;
 }
 
