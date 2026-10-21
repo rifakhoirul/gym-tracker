@@ -1,0 +1,3 @@
+## 2024-10-21 - [Undo Feature for Workout Sets]
+**Learning:** Users can make typos when entering workout set data. Locking the state permanently without providing an easy 'undo' or edit toggle leads to frustrating typo lock-ins during active sessions.
+**Action:** Always provide an 'undo' or edit toggle for submitted data states within an active session (e.g., workout sets), rather than permanently locking the row, to prevent frustrating typo lock-ins. Ensure such toggles are accessible by adding appropriate `accessibilityLabel` and `accessibilityRole` attributes.
