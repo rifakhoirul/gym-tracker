@@ -1,0 +1,3 @@
+## 2025-02-20 - Allow editing of completed items to prevent typo lock-ins
+**Learning:** Users often make typos when entering numerical data (like weight and reps) and hitting "Done" too quickly. If a row is permanently locked upon completion, the user is left with incorrect data without a way to fix it, causing significant frustration.
+**Action:** Always provide an 'undo' or edit toggle for submitted data states within an active session (e.g., workout sets), rather than permanently locking the row. For icon-only buttons (like a checkmark), ensure ARIA labels (e.g., `accessibilityRole` and `accessibilityLabel` in React Native) clearly explain the action (e.g., "Edit set").
